@@ -17,6 +17,8 @@ class BacktestStrategy:
             sorted_tickers = row.sort_values(ascending=False)
             top_5_tickers = sorted_tickers.nlargest(5).index
 
+            
+
             # Calculate returns for top 5 and even positions
             top_5_returns.append(self._calculate_daily_return(top_5_tickers, date))
             even_returns.append(self._calculate_daily_return(self.factors.columns, date))
@@ -30,9 +32,17 @@ class BacktestStrategy:
     def _ticker_return(self, ticker, date):
         # Calculate return for a single ticker
         try:
-            daily_data = self.data[ticker].loc[date]
-            return daily_data['Close'] / daily_data['Open'] - 1
-        except KeyError:
+            # daily_data = self.data[ticker].loc[date]
+            # return daily_data['Close'] / daily_data['Open'] - 1
+            # Use iloc to get the index of the current date
+            current_index = self.data[ticker].index.get_loc(date)
+            
+            # Access the next day's data using iloc and shift
+            next_day_data = self.data[ticker].iloc[current_index + 1]
+
+            # Calculate return using the next day's Open and Close prices
+            return next_day_data['Close'] / next_day_data['Open'] - 1
+        except Exception:
             return 0  # Return zero if data is missing
 
     @staticmethod

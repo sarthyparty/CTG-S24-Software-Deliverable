@@ -1,0 +1,1 @@
+Added code to compute factors 1,2,3. The first 2 are what was specified and the third one was just me messing around with different variables I saw, I tried increasing N and dividing by adj. close instead.

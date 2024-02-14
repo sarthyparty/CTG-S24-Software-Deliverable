@@ -1,0 +1,1 @@
+Just used yfinance api and fetched the stock data for the range, added a couple of checks including null value check and a num columns check.
